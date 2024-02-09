@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <!-- HTML !-->
+ <title>Mortgage Calculator</title>
+    <style>
+        h1 {font-size: 24px;}
+        h2 {color: darkred; font-size: 20px;}
+        p {font-size: 18px;}
+        body {font-size: 18px;}
+        button {
+            align-items: center;
+            background-color: #0A66C2;
+            border: 0;
+            border-radius: 5px;
+            box-sizing: border-box;
+            color: #ffffff;
+            cursor: pointer;
+            display: inline-flex;
+            font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            justify-content: center;
+            line-height: 20px;
+            max-width: 480px;
+            min-height: 40px;
+            min-width: 0px;
+            overflow: hidden;  
+            padding: 0px;
+            padding-left: 20px;
+            padding-right: 20px;
+            text-align: center;
+            touch-action: manipulation;
+            transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+            user-select: none;
+            -webkit-user-select: none;
+            vertical-align: middle;
+}
+
+.button:hover { 
+  background-color: #16437E;
+  color: #ffffff;
+}
+
+.button:active {
+  background: #09223b;
+  color: rgb(255, 255, 255, .7);
+}
+
+.button:disabled { 
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, .08);
+  color: rgba(0, 0, 0, .3);
+}
+    </style>
+</head>
+<body>
+    <h1>Mortgage Calculator</h1>
+    
+    <label for="loanAmount">Loan Amount: $</label>
+    <input type="number" id="loanAmount">
+    
+    <label for="apr">APR (%): </label>
+    <input type="number" id="apr">
+    
+    <label for="loanTerm">Loan Term (years): </label>
+    <input type="number" id="loanTerm">
+    
+    <button class="button" onclick="calculate1()">Calculate</button>
+    
+    <h2>Results:</h2>
+    <p>Monthly Payment: $<span id="monthlyPayment">0.00</span></p>
+    <p>Total Interest: $<span id="totalInterest">0.00</span></p>
+    <p>Yearly Interest: $<span id="yearlyInterest">0.00</span></p>
+    <p>Monthly Interest: $<span id="monthlyInterest">0.00</span></p>
+    
+    <script>
+        function calculate1() {
+            const loanAmount = parseFloat(document.getElementById("loanAmount").value);
+            const apr = parseFloat(document.getElementById("apr").value) / 100;
+            const loanTermYears = parseFloat(document.getElementById("loanTerm").value);
+            
+            const monthlyInterestRate = apr / 12;
+            const loanTermMonths = loanTermYears * 12;
+            
+            const discountFactor = Math.pow(1 + monthlyInterestRate, -loanTermMonths);
+            const monthlyPayment = (loanAmount * monthlyInterestRate) / (1 - discountFactor);
+            
+            const totalPayment = monthlyPayment * loanTermMonths;
+            const totalInterest = totalPayment - loanAmount;
+            
+            document.getElementById("monthlyPayment").textContent = monthlyPayment.toFixed(2);
+            document.getElementById("totalInterest").textContent = totalInterest.toFixed(2);
+            
+            const yearlyInterest = totalInterest / loanTermYears;
+            const monthlyInterest = totalInterest / (loanTermYears * 12);
+            document.getElementById("yearlyInterest").textContent = yearlyInterest.toFixed(2);
+            document.getElementById("monthlyInterest").textContent = monthlyInterest.toFixed(2);
+        }
+      
+    </script>
+     <hr/>
+      <h1>Percentage Calculator 1</h1>
+    
+    <label for="amount1">This amount: $</label>
+    <input type="number" id="amount1">
+    
+    <label for="amount2">is what percent of: $</label>
+    <input type="number" id="amount2">
+    
+    <button class="button" onclick="calculatePercentage()">Calculate Percentage</button>
+    
+    <h2>Result: <span id="result">0.00%</span></h2>
+    
+    <script>
+        function calculatePercentage() {
+            const amount1 = parseFloat(document.getElementById("amount1").value);
+            const amount2 = parseFloat(document.getElementById("amount2").value);
+            
+            if (!isNaN(amount1) && !isNaN(amount2) && amount2 !== 0) {
+                const percentage = (amount1 / amount2) * 100;
+                document.getElementById("result").textContent = percentage.toFixed(2) + "%";
+            } else {
+                document.getElementById("result").textContent = "Invalid input";
+            }
+        }
+    </script>
+    
+     <hr/>
+      <h1>Percentage Calculator 2</h1>
+    
+    <label for="amount4">Percentage: %</label>
+    <input type="number" id="amount4">
+    
+    <label for="amount3">of amount: $</label>
+    <input type="number" id="amount3">
+    
+    <button class="button" onclick="calculatePercentage02()">Calculate Percentage</button>
+    
+    <h2>Result: $<span id="result02">0.00</span></h2>
+    
+    <script>
+        function calculatePercentage02() {
+            const amount3 = parseFloat(document.getElementById("amount3").value);
+            const amount4 = parseFloat(document.getElementById("amount4").value);
+            
+            if (!isNaN(amount3) && !isNaN(amount4) && amount4 !== 0) {
+                const percentage = (amount4 / 100) * amount3;
+                document.getElementById("result02").textContent = percentage.toFixed(2);
+            } else {
+                document.getElementById("result02").textContent = "Invalid input";
+            }
+        }
+    </script>
+    
+    <hr/>
+       <h1>Calculator</h1>
+    <input type="text" id="calcresult" readonly style="width: 200px; padding-bottom: 20px; margin-bottom: 20px; color: white; background-color: dimgray; font-size: 16px;">
+    <br>
+    <div style="padding-bottom: 5px;">
+    <button class="button" onclick="appendToResult('1')">1</button>
+    <button class="button" onclick="appendToResult('2')">2</button>
+    <button class="button" onclick="appendToResult('3')">3</button>
+    <button class="button" onclick="appendToResult('+')">+</button>
+    </div>
+    <div style="padding-bottom: 5px;">
+    <button class="button" onclick="appendToResult('4')">4</button>
+    <button class="button" onclick="appendToResult('5')">5</button>
+    <button class="button" onclick="appendToResult('6')">6</button>
+    <button class="button" onclick="appendToResult('-')">-</button>
+    </div>
+        <div style="padding-bottom: 5px;">
+    <button class="button" onclick="appendToResult('7')">7</button>
+    <button class="button" onclick="appendToResult('8')">8</button>
+    <button class="button" onclick="appendToResult('9')">9</button>
+    <button class="button" onclick="appendToResult('*')">*</button>
+   </div>
+            <div style="padding-bottom: 5px;">
+    <button class="button" onclick="appendToResult('0')">0</button>
+    <button class="button" onclick="calculate2()">=</button>
+    <button class="button" onclick="appendToResult('/')">/</button>
+    <button class="button" onclick="clearResult()">C</button>
+    </div>
+    <h2>Calculation History</h2>
+    <ul id="history"></ul>
+    <button class="button" onclick="clearHistory()">Clear History</button>
+    
+    <script>
+        function appendToResult(value) {
+            document.getElementById("calcresult").value += value;
+        }
+        
+        function calculate2() {
+            try {
+                var result = eval(document.getElementById("calcresult").value);
+                document.getElementById("calcresult").value = result;
+                saveToHistory(result);
+            } catch (error) {
+                document.getElementById("calcresult").value = "Error";
+            }
+        }
+        
+        function clearResult() {
+            document.getElementById("calcresult").value = "";
+        }
+        
+        function saveToHistory(result) {
+            var historyList = document.getElementById("history");
+            var listItem = document.createElement("li");
+            listItem.textContent = result;
+            historyList.appendChild(listItem);
+            
+            // Save to local storage
+            var historyArray = JSON.parse(localStorage.getItem("calculatorHistory")) || [];
+            historyArray.push(result);
+            localStorage.setItem("calculatorHistory", JSON.stringify(historyArray));
+        }
+        
+        function clearHistory() {
+            localStorage.removeItem("calculatorHistory");
+            document.getElementById("history").innerHTML = "";
+        }
+        
+        // Load history from local storage on page load
+        window.onload = function() {
+            var historyArray = JSON.parse(localStorage.getItem("calculatorHistory")) || [];
+            var historyList = document.getElementById("history");
+            
+            for (var i = 0; i < historyArray.length; i++) {
+                var listItem = document.createElement("li");
+                listItem.textContent = historyArray[i];
+                historyList.appendChild(listItem);
+            }
+        }
+    </script>
+        
+     <h1>My Note Taking App</h1>
+    <textarea id="noteArea" rows="10" cols="40" placeholder="Write your note here..."></textarea>
+    <br>
+    <button class="button" id="saveButton">Save to TXT</button>
+
+    <script>
+        // Get references to the textarea and the button
+        const noteArea = document.getElementById('noteArea');
+        const saveButton = document.getElementById('saveButton');
+
+        // Add an event listener to the button
+        saveButton.addEventListener('click', () => {
+            const noteContent = noteArea.value;
+
+            // Create a Blob with the note content
+            const blob = new Blob([noteContent], { type: 'text/plain' });
+
+            // Create a download link for the Blob
+            const downloadLink = document.createElement('a');
+            downloadLink.href = window.URL.createObjectURL(blob);
+            downloadLink.download = 'note.txt';
+
+            // Trigger the click event to download the file
+            downloadLink.click();
+
+            // Clean up
+            window.URL.revokeObjectURL(downloadLink.href);
+        });
+    </script>
+</body>
+</html>
